@@ -22,10 +22,12 @@ class PlayerClass:
         pygame.draw.rect(screen,(230,50,40),(60,60,2*player.health,50))
         screen.blit(heart_image,(280,50))
         # Draw coordinates
-        ajout_coords = len(str(terrain.x//terrain.TILE_SIZE) + str(terrain.y//terrain.TILE_SIZE))-2 
+        x = terrain.x//terrain.TILE_SIZE
+        y = terrain.y//terrain.TILE_SIZE
+        ajout_coords = len(str(x) + str(y))-2 
         pygame.draw.rect(screen,(50,50,50),(50,150,200+ajout_coords*25,70))
         pygame.draw.rect(screen,(150,150,150),(60,160,180+ajout_coords*25,50))
-        coordinates_text = font.render(f"X:{terrain.x//terrain.TILE_SIZE} Y:{terrain.y//terrain.TILE_SIZE}",True,(225,225,225))
+        coordinates_text = font.render(f"X:{x} Y:{y}",True,(225,225,225))
         screen.blit(coordinates_text,(70,160))
 
         

@@ -36,7 +36,6 @@ class GameClass:
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        pygame.draw.rect(self.screen, (0, 255, 0), (1280, 720, 50, 50))
         self.enemy1.update()
         self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
@@ -50,7 +49,6 @@ game = GameClass()
 while game.running:
     game.update()
     game.draw()
-
     pygame.display.flip()
     game.clock.tick(60)
 pygame.quit()

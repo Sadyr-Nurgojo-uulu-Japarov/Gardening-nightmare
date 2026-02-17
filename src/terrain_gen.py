@@ -13,6 +13,8 @@ class TerrainGenClass:
             (10, 10): (255, 255, 0),
             (-2, -2): (255, 255, 255)
             }
+        terrain.light_overlay = pygame.Surface((terrain.TILE_SIZE, terrain.TILE_SIZE), pygame.SRCALPHA)
+        terrain.light_overlay.fill((200, 200, 200, 200)) 
 
     def move_player(terrain, keys):
 
@@ -26,7 +28,6 @@ class TerrainGenClass:
             terrain.y += terrain.PLAYER_SPEED
 
     def draw_terrain(terrain, screen):
-
 
         startScreenX = terrain.x // terrain.TILE_SIZE
         startScreenY = terrain.y // terrain.TILE_SIZE
@@ -42,6 +43,10 @@ class TerrainGenClass:
                     color = terrain.ModifiedTiles[(tileX, tileY)]
                 else:
                     color = (0, 255, 0)  # Default green color for non sigma tiles
-
+                    
                 pygame.draw.rect(screen, color, (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE))
                 pygame.draw.rect(screen, (0, 200, 0), (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE), 1)
+
+                if drawX < terrain.x + terrain.SCREEN_WIDTH//2 < drawX + terrain.TILE_SIZE and drawY < terrain.y + terrain.SCREEN_WIDTH//2 < drawY + terrain.TILE_SIZE:
+                    screen.blit(terrain.light_overlay,(drawX,drawY))
+        
