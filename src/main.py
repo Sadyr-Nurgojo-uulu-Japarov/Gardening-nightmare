@@ -1,6 +1,7 @@
 import pygame
 from player import PlayerClass
 from enemy import EnemyClass
+from terrain_gen import TerrainGenClass
 
 class GameClass:
     def __init__(self):
@@ -13,6 +14,9 @@ class GameClass:
         self.running = True
         self.player = PlayerClass()
         self.enemy1 = EnemyClass(100, 100,self.player)
+
+        self.terrain = TerrainGenClass()
+        self.terrain.generate_terrain()
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
@@ -27,6 +31,7 @@ class GameClass:
         self.enemy1.update()
         self.enemy1.draw(self.screen)
         self.player.draw_player(self.screen)
+        self.terrain.draw_terrain(self.screen)
 
 
 game = GameClass()
