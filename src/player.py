@@ -20,5 +20,5 @@ class Player:
         if pressed_key[self.movement_keys[3]]:
             self.x -= self.speed
 
-    def draw_player(self,game):
-        pygame.draw.rect(game.screen,"blue",[self.x,self.y,self.size,self.size])
+    def draw_player(self,screen):
+        pygame.draw.rect(screen,"blue",[self.x,self.y,self.size,self.size])

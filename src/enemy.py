@@ -9,14 +9,14 @@ class EnemyClass:
     
     def update(enemy):
         # Move towards the player
-        if enemy.x < player.x:
+        if enemy.x < enemy.target.x:
             enemy.x += 1
-        elif enemy.x > player.x:
+        elif enemy.x > enemy.target.x:
             enemy.x -= 1
-        if enemy.y < player.y:
+        if enemy.y < enemy.target.y:
             enemy.y += 1
-        elif enemy.y > player.y:
+        elif enemy.y > enemy.target.y:
             enemy.y -= 1
 
     def draw(enemy, screen):
-        pygame.draw.rect(screen, (255, 0, 0), (enemy.x, enemy.y, 20, 20))
+        pygame.draw.rect(screen, (255, 0, 0), [enemy.x, enemy.y, 20, 20])
