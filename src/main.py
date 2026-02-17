@@ -5,15 +5,18 @@ from terrain_gen import TerrainGenClass
 
 class GameClass:
     def __init__(self):
-        # Pygame setup
         pygame.init()
         pygame.mixer.init()
-        info = pygame.display.Info()
- 
-        self.SCREEN_WIDTH = info.current_w
-        self.SCREEN_HEIGHT = info.current_h
+        pygame.display.init()
 
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
+
+        #loading images
+        self.heart_image = pygame.image.load("assets/heart.png").convert_alpha()
+        self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
+
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
@@ -27,7 +30,9 @@ class GameClass:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 self.running = False
-        self.terrain.move_player(pressed_keys)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                    self.player.health -= 5
+        self.player.move_player(pressed_keys)
 
     def draw(self):
         self.screen.fill((0, 0, 0))
@@ -36,6 +41,7 @@ class GameClass:
         self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
         self.player.draw_player(self.screen)
+        self.player.draw_player_info(self.screen,self.heart_image)
         
 
 

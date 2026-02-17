@@ -12,4 +12,10 @@ class PlayerClass:
         
 
     def draw_player(player,screen):
-        pygame.draw.rect(screen, "blue", (player.x, player.y, player.SIZE, player.SIZE))
+        pygame.draw.rect(screen,"blue",[player.x,player.y,player.size,player.size])
+
+    def draw_player_info(player,screen,heart_image):
+        pygame.draw.rect(screen,(50,50,50),(50,50,220,70))
+        pygame.draw.rect(screen,(150,150,150),(60,60,200,50))
+        pygame.draw.rect(screen,(230,50,40),(60,60,2*player.health,50))
+        screen.blit(heart_image,(280,50))
