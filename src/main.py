@@ -1,8 +1,8 @@
 import pygame
-from player import Player
+from player import PlayerClass
 from enemy import EnemyClass
 
-class Game:
+class GameClass:
     def __init__(self):
         # Pygame setup
         pygame.init()
@@ -11,7 +11,7 @@ class Game:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
-        self.player = Player()
+        self.player = PlayerClass()
         self.enemy1 = EnemyClass(100, 100,self.player)
 
     def update(self):
@@ -29,7 +29,7 @@ class Game:
         self.player.draw_player(self.screen)
 
 
-game = Game()
+game = GameClass()
 
 while game.running:
     game.update()
