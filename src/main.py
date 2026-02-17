@@ -1,6 +1,6 @@
 import pygame
+from player import Player
 from enemy import EnemyClass
-from player import PlayerClass
 
 class Game:
     def __init__(self):
@@ -11,8 +11,8 @@ class Game:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
-        self.player = PlayerClass()
-        self.enemy1 = EnemyClass(100, 100, self.player)
+        self.player = Player()
+        self.enemy1 = EnemyClass(100, 100,self.player)
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
@@ -29,12 +29,12 @@ class Game:
         self.player.draw_player(self.screen)
 
 
-
 game = Game()
 
 while game.running:
     game.update()
     game.draw()
+
     pygame.display.flip()
     game.clock.tick(60)
 pygame.quit()

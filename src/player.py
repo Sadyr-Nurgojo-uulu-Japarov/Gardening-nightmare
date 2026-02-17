@@ -1,7 +1,6 @@
 import pygame
 
-
-class PlayerClass:
+class Player:
     def __init__(self):
         self.x = 1280
         self.y = 720
@@ -21,6 +20,5 @@ class PlayerClass:
         if pressed_key[self.movement_keys[3]]:
             self.x -= self.speed
 
-        
-    def draw_player(self, screen):
+    def draw_player(self,screen):
         pygame.draw.rect(screen,"blue",[self.x,self.y,self.size,self.size])
