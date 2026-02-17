@@ -1,24 +1,15 @@
 import pygame
 
 class PlayerClass:
-    def __init__(player):
-        player.x = 1280
-        player.y = 720
-        player.size = 40
-        player.speed = 5
+    def __init__(player, screen_width, screen_height):
+        player.SCREEN_WIDTH = screen_width
+        player.SCREEN_HEIGHT = screen_height
+        player.SIZE = 40
         player.health = 100
         player.damage_cooldown = 0
-        player.movement_keys = [pygame.K_z,pygame.K_d,pygame.K_s,pygame.K_q]
-
-    def move_player(player,pressed_key):
-        if pressed_key[player.movement_keys[0]]:
-            player.y -= player.speed
-        if pressed_key[player.movement_keys[1]]:
-            player.x += player.speed
-        if pressed_key[player.movement_keys[2]]:
-            player.y += player.speed
-        if pressed_key[player.movement_keys[3]]:
-            player.x -= player.speed
+        player.x = player.SCREEN_WIDTH//2 - player.SIZE // 2 
+        player.y = player.SCREEN_HEIGHT//2 - player.SIZE // 2
+        
 
     def draw_player(player,screen):
-        pygame.draw.rect(screen,"blue",[player.x,player.y,player.size,player.size])
+        pygame.draw.rect(screen, "blue", (player.x, player.y, player.SIZE, player.SIZE))

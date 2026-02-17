@@ -7,7 +7,7 @@
 ## TO DO:
 
 Player/Enemy logic
-Terrain generation
+Terrain generation using noise
 
 
 

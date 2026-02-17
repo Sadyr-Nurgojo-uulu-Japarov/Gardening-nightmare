@@ -1,18 +1,46 @@
 import pygame
 
 class TerrainGenClass:
-    def __init__(terrain):
-        terrain.map = []
+    def __init__(terrain, screen_width, screen_height):
+        terrain.SCREEN_WIDTH = screen_width
+        terrain.SCREEN_HEIGHT = screen_height
+        terrain.TILE_SIZE = 75
+        terrain.x, terrain.y = 0, 0
+        terrain.PLAYER_SPEED = 5
+        terrain.ModifiedTiles = {(2, 2): (255, 0, 0),    # A Red block near the start
+            (5, 3): (0, 0, 255),    # A Blue block
+            (10, 10): (255, 255, 0), # A Yellow block further away
+            (-2, -2): (255, 255, 255)}
 
-    def generate_terrain(terrain):
-        for i in range(0, 2560, 50):
-            for j in range(0, 1440, 50):
-                terrain.map.append((i, j, 1 if i % 100 == 0 else 0, 1 if j % 100 == 0 else 0))
-                
+    def move_player(terrain, keys):
+
+        if keys[pygame.K_d]:
+            terrain.x += terrain.PLAYER_SPEED
+            print(terrain.x, terrain.y)
+        if keys[pygame.K_q]:
+            terrain.x -= terrain.PLAYER_SPEED
+        if keys[pygame.K_z]:
+            terrain.y -= terrain.PLAYER_SPEED
+        if keys[pygame.K_s]:
+            terrain.y += terrain.PLAYER_SPEED
 
     def draw_terrain(terrain, screen):
-        for tile in terrain.map:
-            color = (34, 135, 34) if tile[2] == tile[3] else (34, 130, 34)
-            pygame.draw.rect(screen, color, (tile[0], tile[1], 50, 50))
 
-# Noise terrain generation for the future
+
+        startScreenX = terrain.x // terrain.TILE_SIZE
+        startScreenY = terrain.y // terrain.TILE_SIZE
+        endScreenX = (terrain.x + terrain.SCREEN_WIDTH) // terrain.TILE_SIZE + 1
+        endScreenY = (terrain.y + terrain.SCREEN_HEIGHT) // terrain.TILE_SIZE + 1
+
+        for tileY in range(startScreenY, endScreenY):
+            for tileX in range(startScreenX, endScreenX):
+                drawX = tileX * terrain.TILE_SIZE - terrain.x
+                drawY = tileY * terrain.TILE_SIZE - terrain.y
+
+                if (tileX, tileY) in terrain.ModifiedTiles:
+                    color = terrain.ModifiedTiles[(tileX, tileY)]
+                else:
+                    color = (0, 255, 0)  # Default green color for unmodified tiles
+
+                pygame.draw.rect(screen, color, (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE))
+                pygame.draw.rect(screen, (0, 200, 0), (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE), 1)
