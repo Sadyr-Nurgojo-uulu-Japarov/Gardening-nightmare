@@ -32,7 +32,7 @@ class GameClass:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                     self.player.health -= 5
-        self.player.move_player(pressed_keys)
+        self.terrain.move_player(pressed_keys)
 
     def draw(self):
         self.screen.fill((0, 0, 0))
