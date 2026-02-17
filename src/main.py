@@ -31,7 +31,7 @@ class GameClass:
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                    self.player.health -= 5
+                self.player.health -= 5
         self.terrain.move_player(pressed_keys)
 
     def draw(self):
