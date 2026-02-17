@@ -20,15 +20,12 @@ class Game:
         player.move_player(pressed_keys)
 
     def draw(self):
-<<<<<<< HEAD
         self.screen.fill((0, 0, 0))
         pygame.draw.rect(self.screen, (0, 255, 0), (1280, 720, 50, 50))
         self.enemy1.update()
         self.enemy1.draw(self.screen)
-=======
         game.screen.fill("black")
         player.draw_player()
->>>>>>> dd205b97aa48d8b8d2056649eafd8b7defe37cf7
 
 class Player:
     def __init__(self):
