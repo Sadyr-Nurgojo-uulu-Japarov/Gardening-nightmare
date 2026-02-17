@@ -40,7 +40,7 @@ class GameClass:
         self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
         self.player.draw_player(self.screen)
-        self.player.draw_player_info(self.screen,self.heart_image)
+        self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
         
 
 
