@@ -3,7 +3,7 @@ import pygame
 # Pygame setup
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((1440,900))
+screen = pygame.display.set_mode((2560,1400))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Gardening nightmares")
 running = True
