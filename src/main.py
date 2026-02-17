@@ -1,5 +1,6 @@
 import pygame
-from player import Player
+from player import Playerfrom enemy import EnemyClass
+
 class Game:
     def __init__(self):
         # Pygame setup
@@ -9,6 +10,7 @@ class Game:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
+        self.enemy1 = EnemyClass(100, 100)
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
@@ -18,6 +20,12 @@ class Game:
         player.move_player(pressed_keys)
 
     def draw(self):
+<<<<<<< HEAD
+        self.screen.fill((0, 0, 0))
+        pygame.draw.rect(self.screen, (0, 255, 0), (1280, 720, 50, 50))
+        self.enemy1.update()
+        self.enemy1.draw(self.screen)
+=======
         game.screen.fill("black")
         player.draw_player(game)
 
@@ -27,6 +35,8 @@ player = Player()
 while game.running:
     game.update()
     game.draw()
+    
+
     pygame.display.flip()
     game.clock.tick(60)
 pygame.quit()
