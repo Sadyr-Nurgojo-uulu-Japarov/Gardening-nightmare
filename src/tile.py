@@ -1,8 +1,8 @@
 class TileClass:
-    def __init__(tile,x,y,screen):
+    def __init__(tile,x,y,info):
         tile.x = x
         tile.y = y
-        tile.size = screen.get_rect()[2]
+        tile.size = 75
         tile.is_owned = False
         tile.unowned_type = None
         tile.plant = None
