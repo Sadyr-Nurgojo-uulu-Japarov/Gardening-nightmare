@@ -8,7 +8,9 @@ class TerrainGenClass:
         terrain.TILE_SIZE = 64
         terrain.x, terrain.y = 0, 0
         terrain.PLAYER_SPEED = 5
-        terrain.playerOnTile = False    
+        terrain.playerOnTile = False  
+        terrain.light_overlay = pygame.Surface((terrain.TILE_SIZE,terrain.TILE_SIZE), pygame.SRCALPHA)
+        terrain.light_overlay.fill((200, 200, 200, 50))  
         terrain.ModifiedTiles = {}
         terrain.grassTileSet = pygame.image.load("assets/Grass_free.png").convert_alpha()
         terrain.grassTileSet = pygame.transform.scale(terrain.grassTileSet,(576, 64)) # Image size is : 144x16 so we do 144x4=576 and 16x4=64 to get the right size for each tile
@@ -41,7 +43,6 @@ class TerrainGenClass:
         startScreenY = terrain.y // terrain.TILE_SIZE
         endScreenX = (terrain.x + terrain.SCREEN_WIDTH) // terrain.TILE_SIZE + 1
         endScreenY = (terrain.y + terrain.SCREEN_HEIGHT) // terrain.TILE_SIZE + 1
-
         playerTileX = (terrain.x + terrain.SCREEN_WIDTH // 2) // terrain.TILE_SIZE
         playerTileY = (terrain.y + terrain.SCREEN_HEIGHT // 2) // terrain.TILE_SIZE
 
@@ -64,8 +65,9 @@ class TerrainGenClass:
                 if (tileX, tileY) in terrain.ModifiedTiles:
                     grassType = terrain.ModifiedTiles[(tileX, tileY)]
 
-                if terrain.playerOnTile:
-                    grassType = terrain.grass_list[3]
-
                 screen.blit(terrain.grassTileSet, (drawX, drawY), grassType)
                 pygame.draw.rect(screen, (15, 155, 105), (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE), 1)
+
+                if terrain.playerOnTile:
+                    screen.blit(terrain.light_overlay,(drawX,drawY))
+
