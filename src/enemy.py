@@ -18,8 +18,5 @@ class EnemyClass:
             enemy.x +=  diff_x / distance * enemy.speed
             enemy.y += diff_y / distance * enemy.speed
 
-
-        
-
     def draw(enemy, screen):
         pygame.draw.rect(screen, (255, 0, 0), [enemy.x, enemy.y, 20, 20])
