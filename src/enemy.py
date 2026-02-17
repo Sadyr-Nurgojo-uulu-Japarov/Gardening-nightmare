@@ -5,7 +5,7 @@ class EnemyClass:
     def __init__(enemy, x, y, target):
         enemy.x = x
         enemy.y = y
-        enemy.speed = 2
+        enemy.speed = 4.95
         enemy.target = target  # (animal or player or plant)
     
     def update(enemy):
