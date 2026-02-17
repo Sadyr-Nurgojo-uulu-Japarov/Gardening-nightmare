@@ -1,5 +1,6 @@
 import pygame
 
+
 class EnemyClass:
 
     def __init__(enemy, x, y, target):
@@ -8,14 +9,14 @@ class EnemyClass:
         enemy.target = target  # (animal or player or plant)
     
     def update(enemy):
-        # Move towards the player
-        if enemy.x < player.x:
+        # Move towards the target
+        if enemy.x < enemy.target.x:
             enemy.x += 1
-        elif enemy.x > player.x:
+        elif enemy.x > enemy.target.x:
             enemy.x -= 1
-        if enemy.y < player.y:
+        if enemy.y < enemy.target.y:
             enemy.y += 1
-        elif enemy.y > player.y:
+        elif enemy.y > enemy.target.y:
             enemy.y -= 1
 
     def draw(enemy, screen):
