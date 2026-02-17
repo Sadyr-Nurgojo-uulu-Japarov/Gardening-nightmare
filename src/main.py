@@ -10,10 +10,10 @@ class GameClass:
         pygame.mixer.init()
         info = pygame.display.Info()
  
-        screen_width = info.current_w
-        screen_height = info.current_h
+        self.SCREEN_WIDTH = info.current_w
+        self.SCREEN_HEIGHT = info.current_h
 
-        self.screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
