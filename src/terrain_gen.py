@@ -16,7 +16,6 @@ class TerrainGenClass:
 
         if keys[pygame.K_d]:
             terrain.x += terrain.PLAYER_SPEED
-            print(terrain.x, terrain.y)
         if keys[pygame.K_q]:
             terrain.x -= terrain.PLAYER_SPEED
         if keys[pygame.K_z]:
