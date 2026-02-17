@@ -1,11 +1,13 @@
 # Gardening Nightmare. 
+
 2D game, open world, top-down
 
 
 
 ## TO DO:
-Player movement
-Player movevérité
+
+Player/Enemy logic
+Terrain generation
 
 
 
@@ -21,6 +23,8 @@ Day and night states.
 
 - Monsters: Zombies moving slowly, low health. The more night survived, the more powerful the zombies are
 
-
-
 - Every 10 days or so, your garden can be visited by many people (NPCs) and they can rate your garden out of viability, looks, variety, safety (against zombies)
+
+- Generate map using a seed, perlin noise to make it smooth but random
+
+- Player could unlock tiles 
