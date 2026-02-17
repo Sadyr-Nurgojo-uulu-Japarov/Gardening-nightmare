@@ -1,5 +1,5 @@
 import pygame
-
+from player import Player
 class Game:
     def __init__(self):
         # Pygame setup
@@ -19,31 +19,8 @@ class Game:
 
     def draw(self):
         game.screen.fill("black")
-        player.draw_player()
+        player.draw_player(game)
 
-class Player:
-    def __init__(self):
-        self.x = 1280
-        self.y = 720
-        self.size = 40
-        self.speed = 5
-        self.health = 100
-        self.damage_cooldown = 0
-        self.movement_keys = [pygame.K_z,pygame.K_d,pygame.K_s,pygame.K_q]
-
-    def move_player(self,pressed_key):
-        print(pressed_key)
-        if pressed_key[self.movement_keys[0]]:
-            self.y -= self.speed
-        if pressed_key[self.movement_keys[1]]:
-            self.x += self.speed
-        if pressed_key[self.movement_keys[2]]:
-            self.y += self.speed
-        if pressed_key[self.movement_keys[3]]:
-            self.x -= self.speed
-
-    def draw_player(self):
-        pygame.draw.rect(game.screen,"blue",[self.x,self.y,self.size,self.size])
 
 game = Game()
 player = Player()
