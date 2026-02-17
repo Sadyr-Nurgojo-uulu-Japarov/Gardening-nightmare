@@ -1,6 +1,5 @@
 import pygame
 
-
 class TerrainGenClass:
     def __init__(self):
         self.terrain = []
@@ -14,6 +13,5 @@ class TerrainGenClass:
         for tile in self.terrain:
             color = (34, 135, 34) if tile[2] == tile[3] else (34, 130, 34)
             pygame.draw.rect(screen, color, (tile[0], tile[1], 50, 50))
-
 
 # Noise terrain generation for the future

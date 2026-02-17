@@ -14,7 +14,6 @@ class GameClass:
         self.running = True
         self.player = PlayerClass()
         self.enemy1 = EnemyClass(100, 100,self.player)
-
         self.terrain = TerrainGenClass()
         self.terrain.generate_terrain()
 
