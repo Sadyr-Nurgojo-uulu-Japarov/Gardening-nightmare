@@ -29,9 +29,10 @@ class GameClass:
         self.screen.fill((0, 0, 0))
         pygame.draw.rect(self.screen, (0, 255, 0), (1280, 720, 50, 50))
         self.enemy1.update()
+        self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
         self.player.draw_player(self.screen)
-        self.terrain.draw_terrain(self.screen)
+        
 
 
 game = GameClass()
