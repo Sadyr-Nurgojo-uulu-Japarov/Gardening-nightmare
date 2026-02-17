@@ -39,7 +39,7 @@ class TerrainGenClass:
                 if (tileX, tileY) in terrain.ModifiedTiles:
                     color = terrain.ModifiedTiles[(tileX, tileY)]
                 else:
-                    color = (0, 255, 0)  # Default green color for unmodified tiles
+                    color = (0, 255, 0)  # Default green color for non sigma tiles
 
                 pygame.draw.rect(screen, color, (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE))
                 pygame.draw.rect(screen, (0, 200, 0), (drawX, drawY, terrain.TILE_SIZE, terrain.TILE_SIZE), 1)
