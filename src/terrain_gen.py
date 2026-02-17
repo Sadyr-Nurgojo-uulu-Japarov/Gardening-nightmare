@@ -7,10 +7,12 @@ class TerrainGenClass:
         terrain.TILE_SIZE = 75
         terrain.x, terrain.y = 0, 0
         terrain.PLAYER_SPEED = 5
-        terrain.ModifiedTiles = {(2, 2): (255, 0, 0),
-                                 (5, 3): (0, 0, 255),
-                                 (10, 10): (255, 255, 0),
-                                 (-2, -2): (255, 255, 255)}
+        terrain.ModifiedTiles = {
+            (2, 2): (255, 0, 0),
+            (5, 3): (0, 0, 255),
+            (10, 10): (255, 255, 0),
+            (-2, -2): (255, 255, 255)
+            }
 
     def move_player(terrain, keys):
 
