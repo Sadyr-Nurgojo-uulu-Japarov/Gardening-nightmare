@@ -43,7 +43,6 @@ class GameClass:
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
         
 
-
 game = GameClass()
 
 while game.running:
