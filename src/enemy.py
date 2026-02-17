@@ -2,9 +2,10 @@ import pygame
 
 class EnemyClass:
 
-    def __init__(enemy, x, y):
+    def __init__(enemy, x, y, target):
         enemy.x = x
         enemy.y = y
+        enemy.target = target  # (animal or player or plant)
     
     def update(enemy):
         # Move towards the player
