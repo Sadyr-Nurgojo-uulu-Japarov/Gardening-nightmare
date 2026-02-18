@@ -51,9 +51,8 @@ class GameClass:
         self.enemy1.draw(self.screen)
         self.player.draw_player(self.screen, self.item_image)
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
-        self.draw_mouse()
         self.inventory.draw_hotbar(self.screen)
-
+        self.draw_mouse()
 
     def draw_mouse(self):
         mouse_pos = pygame.mouse.get_pos()
