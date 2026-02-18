@@ -30,7 +30,20 @@ class TerrainGenClass:
             "farmland": terrain.farmland_img
         }
 
+        terrain.NatureList = []
+        for i in range(5):
+            path = f"assets/nature/nature{i}.png"
+            img = pygame.image.load(path).convert_alpha()
+            terrain.NatureList.append(pygame.transform.scale(img, (terrain.TILE_SIZE, terrain.TILE_SIZE)))
+        
+        terrain.TreesList = []
+        for i in range(2, 5):
+            path = f"assets/tree/tree{i}.png"
+            img = pygame.image.load(path).convert_alpha()
+            terrain.TreesList.append(pygame.transform.scale(img, (terrain.TILE_SIZE * 2, terrain.TILE_SIZE * 3)))
+
     def move_player(terrain, keys):
+        terrain.rocks = pygame.image.load
         nerf = 1
         k = [keys[pygame.K_d],keys[pygame.K_q],keys[pygame.K_z],keys[pygame.K_s]]
         n = 0
@@ -94,6 +107,18 @@ class TerrainGenClass:
                     finalIndex = base_offset + foliage_choice
                     
                     screen.blit(terrain.GrassList[finalIndex], (drawX, drawY))
+
+                random.seed((tileX * 19349663) ^ (tileY * 73856093))
+
+                if (tileX, tileY) not in terrain.ModifiedTiles and not base_offset == 0 and not base_offset == 6:
+                    spawnType = random.choices(["nothing", "nature", "tree"], weights=[0.98, 0.01, 0.01])[0]
+
+                    if spawnType == "nature":
+                        nature_choice = random.choice(terrain.NatureList)
+                        screen.blit(nature_choice, (drawX, drawY))
+                    elif spawnType == "tree":
+                        tree_choice = random.choice(terrain.TreesList)
+                        screen.blit(tree_choice, (drawX - terrain.TILE_SIZE, drawY - terrain.TILE_SIZE*2))
 
                 if tileX == playerTileX and tileY == playerTileY:
                     screen.blit(terrain.light_overlay, (drawX, drawY))
