@@ -1,10 +1,10 @@
 import pygame
 
 class InventoryClass:
-    def __init__(inventory,screen):
+    def __init__(inventory,game):
         inventory.items = ["Hoe"]
-        inventory.hotbar = ["Hoe","Hoe"] + [None]*7
-        inventory.SLOT_SIZE = screen.get_rect()[2]//19
+        inventory.hotbar = ["Hoe","Sword"] + [None]*7
+        inventory.SLOT_SIZE = game.screen.get_rect()[2]//19
         inventory.ratio = inventory.SLOT_SIZE/26 # 26 = Pixel side length of sprite in png file
         inventory.slot = pygame.image.load("assets/hotbar_slot.png").convert_alpha()
         inventory.slot = pygame.transform.scale(inventory.slot,(26*inventory.ratio,26*inventory.ratio))
@@ -12,9 +12,13 @@ class InventoryClass:
         inventory.selectedSlot = pygame.transform.scale(inventory.selectedSlot,(26*inventory.ratio,26*inventory.ratio))
         inventory.selectedHotbarSlot = 0
         # Loading all object sprites AW GAAAWWWD
-        hoe_image = pygame.image.load("assets/item/item8.png").convert_alpha()
+        hoe_image = pygame.image.load("assets/item/hoe.png").convert_alpha()
         hoe_image = pygame.transform.scale(hoe_image,(inventory.SLOT_SIZE*0.7,inventory.SLOT_SIZE*0.7))
-        inventory.AllObjects = {"Hoe":hoe_image}
+        sword_image = pygame.image.load("assets/item/sword.png").convert_alpha()
+        sword_image = pygame.transform.scale(sword_image,(inventory.SLOT_SIZE*0.6,inventory.SLOT_SIZE*0.6))
+        sword_image = pygame.transform.rotate(sword_image,-45)
+        inventory.AllObjects = {"Hoe":hoe_image,"Sword":sword_image}
+        
 
     def draw_hotbar(inventory,screen):
         for i in range(9):

@@ -12,21 +12,22 @@ class PlayerClass:
         player.font = pygame.font.SysFont("Arial", 30, bold=True)
         player.items = []
 
+    def draw_held_tool(player,screen,objects,held):
+        if held is not None:
+            toolImage = objects[held]
+            toolImage = pygame.transform.scale(toolImage,(player.SIZE,player.SIZE))
+
+            mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
+            direction = mouse_pos - player.position
+            angle = direction.angle_to(pygame.Vector2(1, 0))
+            toolRotated = pygame.transform.rotate(toolImage, angle - 90)
+            
+            orbit_offset = pygame.Vector2(60, 0).rotate(-angle)
+            toolRect = toolRotated.get_rect(center=player.position + orbit_offset)
+            screen.blit(toolRotated,toolRect)
+
     def draw_player(player,screen):
-        hoeImage = pygame.image.load("assets/item/item8.png")
-        hoeImage = pygame.transform.scale(hoeImage,(player.SIZE,player.SIZE))
-
-        mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
-        direction = mouse_pos - player.position
-        angle = direction.angle_to(pygame.Vector2(1, 0))
-        hoeRotated = pygame.transform.rotate(hoeImage, angle - 90)
-         
-        orbit_offset = pygame.Vector2(60, 0).rotate(-angle)
-        hoeRect = hoeRotated.get_rect(center=player.position + orbit_offset)
-
-        
         pygame.draw.rect(screen,"blue",[player.position.x-player.SIZE//2,player.position.y-player.SIZE//2,player.SIZE,player.SIZE])
-        screen.blit(hoeRotated,hoeRect)
 
     def draw_player_info(player,screen,heart_image,terrain):
         # Draw health
