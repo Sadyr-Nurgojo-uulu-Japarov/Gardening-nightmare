@@ -21,7 +21,7 @@ class TerrainGenClass:
             path = f"assets/grass/grass{i}.png"
             img = pygame.image.load(path).convert_alpha()
             terrain.GrassList.append(pygame.transform.scale(img, (terrain.TILE_SIZE, terrain.TILE_SIZE)))
-            
+
         farmland_path = "assets/grassfarmland/grassfarmland92.png"
         farmland_raw = pygame.image.load(farmland_path).convert_alpha()
         terrain.farmland_img = pygame.transform.scale(farmland_raw, (terrain.TILE_SIZE, terrain.TILE_SIZE))
@@ -90,9 +90,10 @@ class TerrainGenClass:
                         base_offset = 6
 
                     random.seed((tileX * 73856093) ^ (tileY * 19349663))
-                    foliage_choice = random.randint(0, 2)
+                    foliage_choice = random.choices([0, 1, 2], weights=[0.90, 0.07, 0.03])[0]
+                    finalIndex = base_offset + foliage_choice
                     
-                    screen.blit(terrain.GrassList[base_offset + foliage_choice], (drawX, drawY))
+                    screen.blit(terrain.GrassList[finalIndex], (drawX, drawY))
 
                 if tileX == playerTileX and tileY == playerTileY:
                     screen.blit(terrain.light_overlay, (drawX, drawY))
