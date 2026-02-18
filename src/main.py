@@ -22,8 +22,8 @@ class GameClass:
         self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
         cursorWidth = self.cursor.get_width()
         cursorHeight = self.cursor.get_height()
-        self.CURSOR_SIZE_FACTOR = 3
-        self.cursor = pygame.transform.scale(self.cursor,(96 * self.CURSOR_SIZE_FACTOR, 32 * self.CURSOR_SIZE_FACTOR))
+        self.CURSOR_SIZE_FACTOR = 2
+        self.cursor = pygame.transform.scale(self.cursor,(cursorWidth * self.CURSOR_SIZE_FACTOR, cursorHeight * self.CURSOR_SIZE_FACTOR))
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
@@ -40,7 +40,7 @@ class GameClass:
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.player.health -= 5
+                self.terrain.modify_tile(pygame.mouse.get_pos(), "farmland")
         self.terrain.move_player(pressed_keys)
 
     def draw(self):

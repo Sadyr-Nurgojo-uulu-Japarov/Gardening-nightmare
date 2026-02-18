@@ -42,3 +42,4 @@ class PlayerClass:
         pygame.draw.rect(screen,(150,150,150),(60,160,180+ajout_coords*25,50))
         coordinates_text = font.render(f"X:{x} Y:{y}",True,(225,225,225))
         screen.blit(coordinates_text,(70,160))
+
