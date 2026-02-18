@@ -1,4 +1,4 @@
-import pygame
+import pygame  # python.exe -m pip install pygame-ce
 from player import PlayerClass
 from enemy import EnemyClass
 from terrain_gen import TerrainGenClass
@@ -10,7 +10,7 @@ class GameClass:
         pygame.mixer.init()
         pygame.display.init()
 
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN,vsync=1)
 
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
         pygame.mouse.set_visible(False)
