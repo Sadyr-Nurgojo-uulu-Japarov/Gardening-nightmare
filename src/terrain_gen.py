@@ -8,7 +8,7 @@ class TerrainGenClass:
         terrain.SCREEN_HEIGHT = screen_height
         terrain.TILE_SIZE = 64
         RAW_ART_TILE_SIZE = 16
-        terrain.PLAYER_SPEED = 5
+        terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
         terrain.tmp_noise = OpenSimplex(seed=random.randint(0, 1000000))
         terrain.light_overlay = pygame.Surface((terrain.TILE_SIZE, terrain.TILE_SIZE), pygame.SRCALPHA)
@@ -33,14 +33,23 @@ class TerrainGenClass:
             terrain.GrassTypes["Dark Grass"]]
 
     def move_player(terrain, keys):
+        nerf = 1
+        k = [keys[pygame.K_d],keys[pygame.K_q],keys[pygame.K_z],keys[pygame.K_s]]
+        n = 0
+        for i in k:
+            if i:
+                n += 1
+        if n == 2:
+            nerf = (((terrain.PLAYER_SPEED**2)/2)**0.5)/terrain.PLAYER_SPEED # Approximation using pythagorean Theorem to not change speed while going diagonal
         if keys[pygame.K_d]:
-            terrain.x += terrain.PLAYER_SPEED
+            terrain.x += terrain.PLAYER_SPEED*nerf
         if keys[pygame.K_q]:
-            terrain.x -= terrain.PLAYER_SPEED
+            terrain.x -= terrain.PLAYER_SPEED*nerf
         if keys[pygame.K_z]:
-            terrain.y -= terrain.PLAYER_SPEED
+            terrain.y -= terrain.PLAYER_SPEED*nerf
         if keys[pygame.K_s]:
-            terrain.y += terrain.PLAYER_SPEED
+            terrain.y += terrain.PLAYER_SPEED*nerf
+        terrain.x,terrain.y = round(terrain.x),round(terrain.y)
 
     def draw_terrain(terrain, screen):
         biomeScale = 0.03
