@@ -3,7 +3,6 @@
 2D game, open world, top-down
 
 
-
 ## TO DO:
 
 Player/Enemy logic
