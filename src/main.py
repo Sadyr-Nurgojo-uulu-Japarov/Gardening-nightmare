@@ -18,6 +18,8 @@ class GameClass:
         #loading images
         self.heart_image = pygame.image.load("assets/heart.png").convert_alpha()
         self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
+        self.item_image = pygame.image.load("assets/Items_free.png").convert_alpha()
+
         self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
         self.cursor = pygame.transform.scale(self.cursor,(384,128))
 
@@ -44,7 +46,7 @@ class GameClass:
         self.enemy1.update()
         self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
-        self.player.draw_player(self.screen)
+        self.player.draw_player(self.screen, self.item_image)
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
         self.draw_mouse()
         self.inventory.draw_hotbar(self.screen)
