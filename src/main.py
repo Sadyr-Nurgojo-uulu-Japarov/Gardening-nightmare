@@ -18,12 +18,11 @@ class GameClass:
         #loading images
         self.heart_image = pygame.image.load("assets/heart.png").convert_alpha()
         self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
-        self.item_image = pygame.image.load("assets/Items_free.png").convert_alpha()
 
         self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
         cursorWidth = self.cursor.get_width()
         cursorHeight = self.cursor.get_height()
-        self.CURSOR_SIZE_FACTOR = 2
+        self.CURSOR_SIZE_FACTOR = 3
         self.cursor = pygame.transform.scale(self.cursor,(96 * self.CURSOR_SIZE_FACTOR, 32 * self.CURSOR_SIZE_FACTOR))
 
         self.clock = pygame.time.Clock()
@@ -49,7 +48,7 @@ class GameClass:
         self.enemy1.update()
         self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
-        self.player.draw_player(self.screen, self.item_image)
+        self.player.draw_player(self.screen)
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
         self.inventory.draw_hotbar(self.screen)
         self.draw_mouse()
