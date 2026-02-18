@@ -16,6 +16,7 @@ class GameClass:
         #loading images
         self.heart_image = pygame.image.load("assets/heart.png").convert_alpha()
         self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
+        self.item_image = pygame.image.load("assets/Items_free.png").convert_alpha()
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
@@ -39,7 +40,7 @@ class GameClass:
         self.enemy1.update()
         self.terrain.draw_terrain(self.screen)
         self.enemy1.draw(self.screen)
-        self.player.draw_player(self.screen)
+        self.player.draw_player(self.screen, self.item_image)
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
         
 
