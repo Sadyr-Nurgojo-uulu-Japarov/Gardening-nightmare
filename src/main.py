@@ -12,11 +12,13 @@ class GameClass:
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
-
+        pygame.mouse.set_visible(False)
+        
         #loading images
         self.heart_image = pygame.image.load("assets/heart.png").convert_alpha()
         self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
-
+        self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
+        self.cursor = pygame.transform.scale(self.cursor,(384,128))
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
@@ -41,6 +43,11 @@ class GameClass:
         self.enemy1.draw(self.screen)
         self.player.draw_player(self.screen)
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
+        self.draw_mouse()
+
+    def draw_mouse(self):
+        mouse_pos = pygame.mouse.get_pos()
+        self.screen.blit(self.cursor,mouse_pos,(208,12,32,40))
         
 
 game = GameClass()
