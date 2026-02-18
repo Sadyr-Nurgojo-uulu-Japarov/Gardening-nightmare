@@ -11,8 +11,11 @@ class PlayerClass:
         player.item_index = 8 
         player.font = pygame.font.SysFont("Arial", 30, bold=True)
         player.items = []
+        player.isSwinging = False
+        player.swingStep = 0
+        player.swingCooldown = 0
 
-    def draw_held_tool(player,screen,objects,held):
+    def draw_held_tool(player,screen,objects,held):            
         if held is not None:
             toolImage = objects[held]
             toolImage = pygame.transform.scale(toolImage,(player.SIZE,player.SIZE))
@@ -24,6 +27,15 @@ class PlayerClass:
             
             orbit_offset = pygame.Vector2(60, 0).rotate(-angle)
             toolRect = toolRotated.get_rect(center=player.position + orbit_offset)
+            if player.isSwinging:
+                
+                player.swingStep += 1
+            elif player.swingCooldown > 0:
+                player.swingCooldown -= 1
+            if player.swingStep == 4:
+                player.isSwinging = False
+                player.swingStep = 0
+                player.swingCooldown = 10
             screen.blit(toolRotated,toolRect)
 
     def draw_player(player,screen):
@@ -43,4 +55,5 @@ class PlayerClass:
         pygame.draw.rect(screen,(150,150,150),(60,160,180+ajout_coords*25,50))
         coordinates_text = font.render(f"X:{x} Y:{y}",True,(225,225,225))
         screen.blit(coordinates_text,(70,160))
+
 
