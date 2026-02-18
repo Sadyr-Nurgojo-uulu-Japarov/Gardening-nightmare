@@ -38,8 +38,9 @@ class GameClass:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 self.running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.terrain.modify_tile(pygame.mouse.get_pos(), "farmland")
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #event.button = 1 is left click
+                if self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "Hoe":
+                    self.terrain.modify_tile(pygame.mouse.get_pos(), "farmland")
             elif event.type == pygame.TEXTINPUT:
                 self.inventory.select_hotbar_slot(event.text)
         self.terrain.move_player(pressed_keys)
