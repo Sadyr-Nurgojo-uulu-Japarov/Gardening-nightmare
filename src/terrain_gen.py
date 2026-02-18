@@ -33,10 +33,14 @@ class TerrainGenClass:
             terrain.GrassTypes["Dark Grass"]]
 
     def move_player(terrain, keys):
-        if keys[pygame.K_d]: terrain.x += terrain.PLAYER_SPEED
-        if keys[pygame.K_q]: terrain.x -= terrain.PLAYER_SPEED
-        if keys[pygame.K_z]: terrain.y -= terrain.PLAYER_SPEED
-        if keys[pygame.K_s]: terrain.y += terrain.PLAYER_SPEED
+        if keys[pygame.K_d]:
+            terrain.x += terrain.PLAYER_SPEED
+        if keys[pygame.K_q]:
+            terrain.x -= terrain.PLAYER_SPEED
+        if keys[pygame.K_z]:
+            terrain.y -= terrain.PLAYER_SPEED
+        if keys[pygame.K_s]:
+            terrain.y += terrain.PLAYER_SPEED
 
     def draw_terrain(terrain, screen):
         biomeScale = 0.03
