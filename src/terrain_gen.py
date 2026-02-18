@@ -7,7 +7,6 @@ class TerrainGenClass:
         terrain.SCREEN_WIDTH = screen_width
         terrain.SCREEN_HEIGHT = screen_height
         terrain.TILE_SIZE = 64
-        RAW_ART_TILE_SIZE = 16
         terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
         terrain.tmp_noise = OpenSimplex(seed=random.randint(0, 1000000))
@@ -17,32 +16,19 @@ class TerrainGenClass:
         terrain.mouseHighlightOverlay.fill((255, 255, 255, 100)) 
         terrain.ModifiedTiles = {}
 
-
-        terrain.grassTileSet = pygame.image.load("assets/Grass_free.png").convert_alpha()
-        terrain.grassTileSetSIZE_FACTOR = terrain.TILE_SIZE / RAW_ART_TILE_SIZE
-        terrain.grassTileSet = pygame.transform.scale(terrain.grassTileSet,
-            (int(terrain.grassTileSet.get_width() * terrain.grassTileSetSIZE_FACTOR),
-             int(terrain.grassTileSet.get_height() * terrain.grassTileSetSIZE_FACTOR)))
-        gts_SF = terrain.grassTileSetSIZE_FACTOR # To make reading easier
-        # Instead of 0, 48, 192, we use (TileIndex * 16 pixels * scale)
-        terrain.GrassTypes = {
-            "Light Green Grass": (0 * RAW_ART_TILE_SIZE * gts_SF, 0, terrain.TILE_SIZE, terrain.TILE_SIZE),
-            "Grass":             (3 * RAW_ART_TILE_SIZE * gts_SF, 0, terrain.TILE_SIZE, terrain.TILE_SIZE),
-            "Dark Grass":        (6 * RAW_ART_TILE_SIZE * gts_SF, 0, terrain.TILE_SIZE, terrain.TILE_SIZE)}
-        terrain.GrassList = [
-            terrain.GrassTypes["Light Green Grass"],
-            terrain.GrassTypes["Grass"],
-            terrain.GrassTypes["Dark Grass"]]
+        terrain.GrassList = []
+        for i in range(9):
+            path = f"assets/grass/grass{i}.png"
+            img = pygame.image.load(path).convert_alpha()
+            terrain.GrassList.append(pygame.transform.scale(img, (terrain.TILE_SIZE, terrain.TILE_SIZE)))
+            
+        farmland_path = "assets/grassfarmland/grassfarmland92.png"
+        farmland_raw = pygame.image.load(farmland_path).convert_alpha()
+        terrain.farmland_img = pygame.transform.scale(farmland_raw, (terrain.TILE_SIZE, terrain.TILE_SIZE))
         
-
-        terrain.herbsFarmlandTileSet = pygame.image.load("assets/herbs_farmland.png").convert_alpha()
-        terrain.herbsFarmlandTileSetSIZE_FACTOR = terrain.TILE_SIZE / RAW_ART_TILE_SIZE
-        terrain.herbsFarmlandTileSet = pygame.transform.scale((terrain.herbsFarmlandTileSet),
-             (int(terrain.herbsFarmlandTileSet.get_width() * terrain.herbsFarmlandTileSetSIZE_FACTOR), int(terrain.herbsFarmlandTileSet.get_height() * terrain.herbsFarmlandTileSetSIZE_FACTOR)))
-        hfts_SF = terrain.herbsFarmlandTileSetSIZE_FACTOR # To make reading easier
         terrain.HerbsFarmlandTypes = {
-            "farmland": [terrain.herbsFarmlandTileSet, (192 * RAW_ART_TILE_SIZE * hfts_SF, 80 * RAW_ART_TILE_SIZE * hfts_SF, terrain.TILE_SIZE, terrain.TILE_SIZE)]}
-
+            "farmland": terrain.farmland_img
+        }
 
     def move_player(terrain, keys):
         nerf = 1
@@ -52,7 +38,7 @@ class TerrainGenClass:
             if i:
                 n += 1
         if n == 2:
-            nerf = (((terrain.PLAYER_SPEED**2)/2)**0.5)/terrain.PLAYER_SPEED # Approximation using pythagorean Theorem to not change speed while going diagonal
+            nerf = (((terrain.PLAYER_SPEED**2)/2)**0.5)/terrain.PLAYER_SPEED 
         if keys[pygame.K_d]:
             terrain.x += terrain.PLAYER_SPEED*nerf
         if keys[pygame.K_q]:
@@ -71,14 +57,13 @@ class TerrainGenClass:
         elif new_tile_type == "farmland":
             terrain.ModifiedTiles[(tileX, tileY)] = terrain.HerbsFarmlandTypes["farmland"]
 
-
     def draw_terrain(terrain, screen):
         biomeScale = 0.03
 
-        startScreenX = terrain.x // terrain.TILE_SIZE
-        startScreenY = terrain.y // terrain.TILE_SIZE
-        endScreenX = (terrain.x + terrain.SCREEN_WIDTH) // terrain.TILE_SIZE + 1
-        endScreenY = (terrain.y + terrain.SCREEN_HEIGHT) // terrain.TILE_SIZE + 1
+        startScreenX = int(terrain.x // terrain.TILE_SIZE)
+        startScreenY = int(terrain.y // terrain.TILE_SIZE)
+        endScreenX = int((terrain.x + terrain.SCREEN_WIDTH) // terrain.TILE_SIZE) + 1
+        endScreenY = int((terrain.y + terrain.SCREEN_HEIGHT) // terrain.TILE_SIZE) + 1
         
         playerTileX = (terrain.x + terrain.SCREEN_WIDTH // 2) // terrain.TILE_SIZE
         playerTileY = (terrain.y + terrain.SCREEN_HEIGHT // 2) // terrain.TILE_SIZE
@@ -89,34 +74,25 @@ class TerrainGenClass:
         for tileY in range(startScreenY, endScreenY):
             for tileX in range(startScreenX, endScreenX):
                 
-                
-
                 drawX = tileX * terrain.TILE_SIZE - terrain.x
                 drawY = tileY * terrain.TILE_SIZE - terrain.y
 
                 if (tileX, tileY) in terrain.ModifiedTiles:
-                    tileType = terrain.ModifiedTiles[(tileX, tileY)]
-                    screen.blit(tileType[0], (drawX, drawY), tileType[1])
-                    tileType = tileType[1]
+                    screen.blit(terrain.ModifiedTiles[(tileX, tileY)], (drawX, drawY))
                 else:
-                    # 1. Biome Selection
                     val = terrain.tmp_noise.noise2(tileX * biomeScale, tileY * biomeScale)
+                    
                     if val < -0.333:
-                        tile_index = 0
+                        base_offset = 0
                     elif val < 0.333:
-                        tile_index = 1 
+                        base_offset = 3
                     else:
-                        tile_index = 2 
-
-                    base_rect = terrain.GrassList[tile_index]
+                        base_offset = 6
 
                     random.seed((tileX * 73856093) ^ (tileY * 19349663))
-
-                    step = terrain.TILE_SIZE 
-                    grassFoliage = random.choices([0, step, step * 2], weights=[0.95, 0.02, 0.03])[0]
-
-                    tileType = (base_rect[0] + grassFoliage, base_rect[1], base_rect[2], base_rect[3])
-                    screen.blit(terrain.grassTileSet, (drawX, drawY), tileType)
+                    foliage_choice = random.randint(0, 2)
+                    
+                    screen.blit(terrain.GrassList[base_offset + foliage_choice], (drawX, drawY))
 
                 if tileX == playerTileX and tileY == playerTileY:
                     screen.blit(terrain.light_overlay, (drawX, drawY))
