@@ -10,7 +10,7 @@ class InventoryClass:
         inventory.slot = pygame.transform.scale(inventory.slot,(576*inventory.ratio,256*inventory.ratio))
 
         # Loading all object sprites AW GAAAWWWD
-        hoe_image = pygame.image.load("assets/item/hoe.png").convert_alpha()
+        hoe_image = pygame.image.load("assets/item/item8.png").convert_alpha()
         hoe_image = pygame.transform.scale(hoe_image,(inventory.SLOT_SIZE*0.7,inventory.SLOT_SIZE*0.7))
         hoe_image = pygame.transform.rotate(hoe_image,-45)
         inventory.AllObjects = {"Hoe":hoe_image}
