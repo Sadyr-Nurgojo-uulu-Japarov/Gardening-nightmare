@@ -5,14 +5,12 @@
 
 ## TO DO:
 
-Player/Enemy logic
-Terrain generation using noise
+- Player could unlock tiles
 
+- Players collect ressources from the map (stone, trees...) then craft things (house, fence...).
 
+- Players spawn next to his house at spawn.
 
-## Idea/Rules:
-
-- Protect your garden, make it grow, while you're being attacked by monsters.
 Day and night states. 
 - Day: Make a beautiful garden, grow plants/crops to sell to the market and gain money to plant more.
 - Night: Protect your garden at all costs.
@@ -24,6 +22,13 @@ Day and night states.
 
 - Every 10 days or so, your garden can be visited by many people (NPCs) and they can rate your garden out of viability, looks, variety, safety (against zombies)
 
+
+
+## Idea/Rules:
+
+- Protect your garden, make it grow, while you're being attacked by monsters.
+
+
 - Generate map using a seed, perlin noise to make it smooth but random
 
-- Player could unlock tiles 
+
