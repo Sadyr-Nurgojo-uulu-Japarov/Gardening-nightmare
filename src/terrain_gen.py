@@ -6,7 +6,7 @@ class TerrainGenClass:
     def __init__(terrain, screen_width, screen_height):
         terrain.SCREEN_WIDTH = screen_width
         terrain.SCREEN_HEIGHT = screen_height
-        terrain.TILE_SIZE = 80
+        terrain.TILE_SIZE = 64
         terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
         terrain.tmp_noiseBiomes = OpenSimplex(seed=random.randint(0, 1000000))
@@ -78,7 +78,7 @@ class TerrainGenClass:
             terrain.ModifiedTiles[(tileX, tileY)] = terrain.HerbsFarmlandTypes["farmland"]
 
     def draw_terrain(terrain, screen):
-        biomeScale = 0.03
+        biomeScale = 0.04
 
         startScreenX = int(terrain.x // terrain.TILE_SIZE)
         startScreenY = int(terrain.y // terrain.TILE_SIZE)
@@ -111,6 +111,7 @@ class TerrainGenClass:
 
                     noiseValueWater = terrain.tmp_noiseWater.noise2(tileX * biomeScale * 2, tileY * biomeScale * 2)
                     if noiseValueWater < -0.6 and base_offset == 0:
+                        random.seed((tileX * 1936292**3) ^ (tileY * 734756457593))
                         screen.blit(terrain.LakeList[random.choices([0, 1, 2], weights=[0.8, 0.15, 0.05])[0]], (drawX, drawY))
                         if tileX == playerTileX and tileY == playerTileY:
                             screen.blit(terrain.light_overlay, (drawX, drawY))
