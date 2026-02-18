@@ -11,27 +11,22 @@ class PlayerClass:
         player.item_index = 8 
         player.font = pygame.font.SysFont("Arial", 30, bold=True)
         player.items = []
-        itemTileSet = pygame.image.load("assets/Items_free.png").convert_alpha()
-        for i in range(10): # On découpe les 10 premiers items
-            surf = pygame.Surface((16, 16), pygame.SRCALPHA)
-            surf.blit(itemTileSet, (0, 0), (i * 16, 0, 16, 16))
-            player.items.append(pygame.transform.scale(surf, (player.SIZE, player.SIZE)))
 
     def draw_player(player,screen):
-        item_image = pygame.image.load("assets/Items_free.png")
-        item_image = pygame.transform.scale(item_image,(player.SIZE * 9,player.SIZE))
+        hoeImage = pygame.image.load("assets/item/hoe.png")
+        hoeImage = pygame.transform.scale(hoeImage,(player.SIZE,player.SIZE))
 
         mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
         direction = mouse_pos - player.position
         angle = direction.angle_to(pygame.Vector2(1, 0))
-        item_rotated = pygame.transform.rotate(player.items[player.item_index], angle - 90)
+        hoeRotated = pygame.transform.rotate(hoeImage, angle - 90)
          
         orbit_offset = pygame.Vector2(60, 0).rotate(-angle)
-        item_rect = item_rotated.get_rect(center=player.position + orbit_offset)
+        hoeRect = hoeRotated.get_rect(center=player.position + orbit_offset)
 
         
         pygame.draw.rect(screen,"blue",[player.position.x-player.SIZE//2,player.position.y-player.SIZE//2,player.SIZE,player.SIZE])
-        screen.blit(item_rotated,item_rect)
+        screen.blit(hoeRotated,hoeRect)
 
     def draw_player_info(player,screen,heart_image,terrain):
         # Draw health
