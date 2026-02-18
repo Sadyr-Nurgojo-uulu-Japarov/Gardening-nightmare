@@ -12,7 +12,6 @@ class InventoryClass:
         # Loading all object sprites AW GAAAWWWD
         hoe_image = pygame.image.load("assets/item/item8.png").convert_alpha()
         hoe_image = pygame.transform.scale(hoe_image,(inventory.SLOT_SIZE*0.7,inventory.SLOT_SIZE*0.7))
-        hoe_image = pygame.transform.rotate(hoe_image,-45)
         inventory.AllObjects = {"Hoe":hoe_image}
 
     def draw_hotbar(inventory,screen):
