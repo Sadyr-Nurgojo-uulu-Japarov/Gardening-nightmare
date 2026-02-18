@@ -10,7 +10,7 @@ class GameClass:
         pygame.mixer.init()
         pygame.display.init()
 
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN,vsync=1)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, vsync=1)
 
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
         pygame.mouse.set_visible(False)
@@ -21,7 +21,10 @@ class GameClass:
         self.item_image = pygame.image.load("assets/Items_free.png").convert_alpha()
 
         self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
-        self.cursor = pygame.transform.scale(self.cursor,(384,128))
+        cursorWidth = self.cursor.get_width()
+        cursorHeight = self.cursor.get_height()
+        self.CURSOR_SIZE_FACTOR = 2
+        self.cursor = pygame.transform.scale(self.cursor,(96 * self.CURSOR_SIZE_FACTOR, 32 * self.CURSOR_SIZE_FACTOR))
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
@@ -54,7 +57,7 @@ class GameClass:
 
     def draw_mouse(self):
         mouse_pos = pygame.mouse.get_pos()
-        self.screen.blit(self.cursor,mouse_pos,(208,12,32,40))
+        self.screen.blit(self.cursor,mouse_pos,(52 * self.CURSOR_SIZE_FACTOR, 3 * self.CURSOR_SIZE_FACTOR, 8 * self.CURSOR_SIZE_FACTOR, 10 * self.CURSOR_SIZE_FACTOR))
         
 
 game = GameClass()
