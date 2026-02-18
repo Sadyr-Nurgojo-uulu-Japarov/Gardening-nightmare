@@ -13,7 +13,7 @@ class PlayerClass:
         player.items = []
 
     def draw_player(player,screen):
-        hoeImage = pygame.image.load("assets/item/hoe.png")
+        hoeImage = pygame.image.load("assets/item/item8.png")
         hoeImage = pygame.transform.scale(hoeImage,(player.SIZE,player.SIZE))
 
         mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
