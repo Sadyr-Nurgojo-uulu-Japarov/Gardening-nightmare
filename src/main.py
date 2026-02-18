@@ -8,7 +8,6 @@ class GameClass:
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
-        pygame.display.init()
 
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, vsync=1)
 
@@ -41,7 +40,10 @@ class GameClass:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.terrain.modify_tile(pygame.mouse.get_pos(), "farmland")
+            elif event.type == pygame.TEXTINPUT:
+                self.inventory.select_hotbar_slot(event.text)
         self.terrain.move_player(pressed_keys)
+        
 
     def draw(self):
         self.screen.fill((0, 0, 0))
