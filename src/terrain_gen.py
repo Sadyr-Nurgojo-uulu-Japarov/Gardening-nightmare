@@ -6,10 +6,11 @@ class TerrainGenClass:
     def __init__(terrain, screen_width, screen_height):
         terrain.SCREEN_WIDTH = screen_width
         terrain.SCREEN_HEIGHT = screen_height
-        terrain.TILE_SIZE = 64
+        terrain.TILE_SIZE = 80
         terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
-        terrain.tmp_noise = OpenSimplex(seed=random.randint(0, 1000000))
+        terrain.tmp_noiseBiomes = OpenSimplex(seed=random.randint(0, 1000000))
+        terrain.tmp_noiseWater = OpenSimplex(seed=random.randint(0, 1000000))
         terrain.light_overlay = pygame.Surface((terrain.TILE_SIZE, terrain.TILE_SIZE), pygame.SRCALPHA)
         terrain.light_overlay.fill((200, 200, 200, 50))  
         terrain.mouseHighlightOverlay = pygame.Surface((terrain.TILE_SIZE, terrain.TILE_SIZE), pygame.SRCALPHA)
@@ -41,6 +42,12 @@ class TerrainGenClass:
             path = f"assets/tree/tree{i}.png"
             img = pygame.image.load(path).convert_alpha()
             terrain.TreesList.append(pygame.transform.scale(img, (terrain.TILE_SIZE * 2, terrain.TILE_SIZE * 3)))
+
+        terrain.LakeList = []
+        for i in range(3):
+            path = f"assets/water/lake{i}.png"
+            img = pygame.image.load(path).convert_alpha()
+            terrain.LakeList.append(pygame.transform.scale(img, (terrain.TILE_SIZE, terrain.TILE_SIZE)))
 
     def move_player(terrain, keys):
         terrain.rocks = pygame.image.load
@@ -93,14 +100,24 @@ class TerrainGenClass:
                 if (tileX, tileY) in terrain.ModifiedTiles:
                     screen.blit(terrain.ModifiedTiles[(tileX, tileY)], (drawX, drawY))
                 else:
-                    val = terrain.tmp_noise.noise2(tileX * biomeScale, tileY * biomeScale)
+                    noiseValueBiome = terrain.tmp_noiseBiomes.noise2(tileX * biomeScale, tileY * biomeScale)
                     
-                    if val < -0.333:
+                    if noiseValueBiome < -0.333:
                         base_offset = 0
-                    elif val < 0.333:
+                    elif noiseValueBiome < 0.333:
                         base_offset = 3
                     else:
                         base_offset = 6
+
+                    noiseValueWater = terrain.tmp_noiseWater.noise2(tileX * biomeScale * 2, tileY * biomeScale * 2)
+                    if noiseValueWater < -0.6 and base_offset == 0:
+                        screen.blit(terrain.LakeList[random.choices([0, 1, 2], weights=[0.8, 0.15, 0.05])[0]], (drawX, drawY))
+                        if tileX == playerTileX and tileY == playerTileY:
+                            screen.blit(terrain.light_overlay, (drawX, drawY))
+                
+                        if tileX == mouseTileX and tileY == mouseTileY:
+                            screen.blit(terrain.mouseHighlightOverlay, (drawX, drawY))
+                        continue
 
                     random.seed((tileX * 73856093) ^ (tileY * 19349663))
                     foliage_choice = random.choices([0, 1, 2], weights=[0.90, 0.07, 0.03])[0]
