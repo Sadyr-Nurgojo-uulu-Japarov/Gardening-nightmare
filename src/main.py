@@ -2,6 +2,7 @@ import pygame
 from player import PlayerClass
 from enemy import EnemyClass
 from terrain_gen import TerrainGenClass
+from inventory import InventoryClass
 
 class GameClass:
     def __init__(self):
@@ -19,12 +20,14 @@ class GameClass:
         self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
         self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
         self.cursor = pygame.transform.scale(self.cursor,(384,128))
+
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
         self.terrain = TerrainGenClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         self.player = PlayerClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         self.enemy1 = EnemyClass(100, 100, self.player, self.terrain)
+        self.inventory = InventoryClass(self.screen)
         
 
     def update(self):
@@ -44,6 +47,8 @@ class GameClass:
         self.player.draw_player(self.screen)
         self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
         self.draw_mouse()
+        self.inventory.draw_hotbar(self.screen)
+
 
     def draw_mouse(self):
         mouse_pos = pygame.mouse.get_pos()
