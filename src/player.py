@@ -1,4 +1,5 @@
 import pygame
+
 pygame.init()
 font = pygame.font.Font("assets/fonts/BoldPixels.otf",50)
 class PlayerClass:
@@ -16,8 +17,8 @@ class PlayerClass:
             surf.blit(itemTileSet, (0, 0), (i * 16, 0, 16, 16))
             player.items.append(pygame.transform.scale(surf, (player.SIZE, player.SIZE)))
 
-    def draw_player(player,screen,item_image):
-
+    def draw_player(player,screen):
+        item_image = pygame.image.load("assets/Items_free.png")
         item_image = pygame.transform.scale(item_image,(player.SIZE * 9,player.SIZE))
 
         mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
@@ -31,9 +32,6 @@ class PlayerClass:
         
         pygame.draw.rect(screen,"blue",[player.position.x-player.SIZE//2,player.position.y-player.SIZE//2,player.SIZE,player.SIZE])
         screen.blit(item_rotated,item_rect)
-
-
-
 
     def draw_player_info(player,screen,heart_image,terrain):
         # Draw health
