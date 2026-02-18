@@ -41,6 +41,8 @@ class GameClass:
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #event.button = 1 is left click
                 if self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "Hoe":
                     self.terrain.modify_tile(pygame.mouse.get_pos(), "farmland")
+                elif self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "Sword" and self.player.swingCooldown == 0:
+                    self.player.isSwinging = True
             elif event.type == pygame.TEXTINPUT:
                 self.inventory.select_hotbar_slot(event.text)
         self.terrain.move_player(pressed_keys)
