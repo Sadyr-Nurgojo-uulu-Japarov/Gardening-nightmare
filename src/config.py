@@ -20,6 +20,7 @@ class Assets:
             self.Blocks.EveryBlock[(grassNames[i])] = self.GrassList[-1]
 
     def load_farmland(self):
+        """
         self.FarmlandList = []
         farmlandNames = ["farmland"]
         for i in range(len(farmlandNames)):
@@ -29,6 +30,10 @@ class Assets:
             img = pygame.image.load(path).convert_alpha()
             self.FarmlandList.append(pygame.transform.scale(img, (self.TILE_SIZE, self.TILE_SIZE)))
             self.Blocks.EveryBlock[(farmlandNames[i])] = self.FarmlandList[-1]
+            """
+        img = pygame.image.load("assets/grassfarmland/grassfarmland92.png").convert_alpha()
+        self.farmland = pygame.transform.scale(img, (self.TILE_SIZE, self.TILE_SIZE))
+        self.Blocks.EveryBlock["farmland"] = self.farmland
 
     def load_nature(self):
         self.NatureList = []
@@ -61,13 +66,13 @@ class Assets:
             self.LakeList.append(pygame.transform.scale(img, (self.TILE_SIZE, self.TILE_SIZE)))
             self.Blocks.EveryBlock[(lakeNames[i])] = self.LakeList[-1]
 
-    def load_items(self):
+    def load_items(self, SLOT_SIZE):
         self.ItemsList = []
-        itemNames = ["sword", "pickaxe", "axe", "hoe", "wood", "stone", "iron ingot", "iron nugget", "emerald"]
+        itemNames = ["sword", "pickaxe", "axe", "hoe", "wood", "stone", "iron_ingot", "iron_nugget", "emerald"]
         for i in range(len(itemNames)):
             path = f"assets/item/{itemNames[i]}.png"
             img = pygame.image.load(path).convert_alpha()
-            self.ItemsList.append(pygame.transform.scale(img, (self.TILE_SIZE, self.TILE_SIZE)))
+            self.ItemsList.append(pygame.transform.scale(img, (SLOT_SIZE*0.7, SLOT_SIZE*0.7)))
             self.Blocks.EveryBlock[(itemNames[i])] = self.ItemsList[-1]
 
     def load_cursor(self):
@@ -78,6 +83,20 @@ class Assets:
         self.cursor = pygame.transform.scale(img,(cursorWidth * self.CURSOR_SIZE_FACTOR,
                                                           cursorHeight * self.CURSOR_SIZE_FACTOR))
         self.Objects.EveryObject["cursor"] = self.cursor
+
+    def load_heart(self):
+        img = pygame.image.load("assets/heart.png").convert_alpha()
+        self.heart = pygame.transform.scale(img,(75,75))
+        self.Objects.EveryObject["heart"] = self.heart
+
+    def load_hotbar(self, inventoryRatio):
+        self.HotbarList = []
+        hotbarNames = ["hotbar_slot", "selected_hotbar_slot"]
+        for i in range(len(hotbarNames)):
+            path = f"assets/{hotbarNames[i]}.png"
+            img = pygame.image.load(path).convert_alpha()
+            self.HotbarList.append(pygame.transform.scale(img, (26*inventoryRatio, 26*inventoryRatio)))
+            self.Objects.EveryObject[(hotbarNames[i])] = self.HotbarList[-1]
 
 
 

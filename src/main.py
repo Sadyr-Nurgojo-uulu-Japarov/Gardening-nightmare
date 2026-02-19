@@ -9,20 +9,19 @@ class GameClass:
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
+        pygame.font.init() # Initialize font system
 
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, vsync=1)
-
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
         pygame.mouse.set_visible(False)
         
         self.assets = Assets()
         self.assets.load_cursor()
-        #loading images
-        self.heartImage = pygame.image.load("assets/heart.png").convert_alpha()
-        self.heartImage = pygame.transform.scale(self.heartImage,(75,75))
-
+        self.assets.load_heart()
         
-
+        # FPS Font
+        self.fps_font = pygame.font.SysFont("Arial", 24, bold=True)
+        
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
         self.running = True
@@ -37,13 +36,14 @@ class GameClass:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 self.running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #event.button = 1 is left click
-                if self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "Hoe":
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: 
+                if self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "hoe":
                     self.terrain.modify_tile(pygame.mouse.get_pos(), "farmland")
-                elif self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "Sword" and self.player.swingCooldown == 0:
+                elif self.inventory.hotbar[self.inventory.selectedHotbarSlot] == "sword" and self.player.swingCooldown == 0:
                     self.player.isSwinging = True
             elif event.type == pygame.TEXTINPUT:
                 self.inventory.select_hotbar_slot(event.text)
+        
         self.terrain.move_player(pressed_keys)
         
 
@@ -53,16 +53,25 @@ class GameClass:
         self.terrain.draw_terrain(self.screen)
         self.enemy.draw(self.screen)
         self.player.draw_player(self.screen)
-        self.player.draw_held_tool(self.screen,self.inventory.AllObjects,
+        self.player.draw_held_tool(self.screen,self.inventory.EveryBlocks,
                                    self.inventory.hotbar[self.inventory.selectedHotbarSlot])
-        self.player.draw_player_info(self.screen,self.heartImage,self.terrain)
+        self.player.draw_player_info(self.screen,self.assets.heart,self.terrain)
         self.inventory.draw_hotbar(self.screen)
+        
+        # Draw FPS and Mouse last so they stay on top
+        self.draw_fps()
         self.draw_mouse()
+
+    def draw_fps(self):
+        # Calculate FPS
+        fps_val = int(self.clock.get_fps())
+        fps_surface = self.fps_font.render(f"FPS: {fps_val}", True, (255, 255, 0))
+        self.screen.blit(fps_surface, (20, 20))
 
     def draw_mouse(self):
         mousePos = pygame.mouse.get_pos()
         self.screen.blit(self.assets.cursor, mousePos,(52 * self.assets.CURSOR_SIZE_FACTOR, 3 * self.assets.CURSOR_SIZE_FACTOR,
-                                                8 * self.assets.CURSOR_SIZE_FACTOR, 10 * self.assets.CURSOR_SIZE_FACTOR))
+                                                 8 * self.assets.CURSOR_SIZE_FACTOR, 10 * self.assets.CURSOR_SIZE_FACTOR))
         
 
 game = GameClass()
@@ -71,5 +80,6 @@ while game.running:
     game.update()
     game.draw()
     pygame.display.flip()
-    game.clock.tick(60)
+    game.clock.tick(60) # This keeps the game at 60 FPS
+
 pygame.quit()

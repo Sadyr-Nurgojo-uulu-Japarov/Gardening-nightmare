@@ -1,23 +1,20 @@
 import pygame
 
+from config import Assets
+
 class InventoryClass:
     def __init__(inventory,game):
-        inventory.items = ["Hoe"]
-        inventory.hotbar = ["Hoe","Sword"] + [None]*7
+        inventory.hotbar = ["sword", "pickaxe", "axe", "hoe", "wood", "stone", "iron_ingot", "iron_nugget", "emerald"]
         inventory.SLOT_SIZE = game.screen.get_rect()[2]//19
         inventory.ratio = inventory.SLOT_SIZE/26 # 26 = Pixel side length of sprite in png file
-        inventory.slot = pygame.image.load("assets/hotbar_slot.png").convert_alpha()
-        inventory.slot = pygame.transform.scale(inventory.slot,(26*inventory.ratio,26*inventory.ratio))
-        inventory.selectedSlot = pygame.image.load("assets/selected_hotbar_slot.png").convert_alpha()
-        inventory.selectedSlot = pygame.transform.scale(inventory.selectedSlot,(26*inventory.ratio,26*inventory.ratio))
         inventory.selectedHotbarSlot = 0
-        # Loading all object sprites AW GAAAWWWD
-        hoeImg = pygame.image.load("assets/item/hoe.png").convert_alpha()
-        hoeImg = pygame.transform.scale(hoeImg,(inventory.SLOT_SIZE*0.7,inventory.SLOT_SIZE*0.7))
-        swordImg = pygame.image.load("assets/item/sword.png").convert_alpha()
-        swordImg = pygame.transform.scale(swordImg,(inventory.SLOT_SIZE*0.6,inventory.SLOT_SIZE*0.6))
-        swordImg = pygame.transform.rotate(swordImg,-45)
-        inventory.AllObjects = {"Hoe":hoeImg,"Sword":swordImg}
+
+        inventory.assets = Assets(inventory.SLOT_SIZE)
+        inventory.assets.load_items(inventory.SLOT_SIZE)
+        inventory.assets.load_hotbar(inventory.ratio)
+        inventory.slot = inventory.assets.HotbarList[0]
+        inventory.selectedSlot = inventory.assets.HotbarList[1]
+        inventory.EveryBlocks = inventory.assets.Blocks.EveryBlock
         
 
     def draw_hotbar(inventory,screen):
@@ -31,7 +28,7 @@ class InventoryClass:
             if inventory.hotbar[i] is None:
                 pass
             else:
-                hoeImage = inventory.AllObjects[inventory.hotbar[i]]
+                hoeImage = inventory.EveryBlocks[inventory.hotbar[i]]
                 hoeX = inventory.SLOT_SIZE*5 + i*inventory.SLOT_SIZE + (inventory.SLOT_SIZE - hoeImage.get_rect()[2])/2
                 hoeY = screen.get_rect()[3]-inventory.SLOT_SIZE-50 + (inventory.SLOT_SIZE - hoeImage.get_rect()[3])/2
                 screen.blit(hoeImage,(hoeX,hoeY))

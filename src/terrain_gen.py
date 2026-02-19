@@ -119,3 +119,5 @@ class TerrainGenClass:
                 
                 if tileX == mouseTileX and tileY == mouseTileY:
                     screen.blit(terrain.mouseHighlightOverlay, (drawX, drawY))
+                
+                
