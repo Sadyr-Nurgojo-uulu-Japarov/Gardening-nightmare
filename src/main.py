@@ -9,7 +9,7 @@ class GameClass:
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
-        pygame.font.init() # Initialize font system
+        pygame.font.init()
 
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, vsync=1)
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
@@ -18,8 +18,7 @@ class GameClass:
         self.assets = Assets()
         self.assets.load_cursor()
         self.assets.load_heart()
-        
-        # FPS Font
+
         self.fps_font = pygame.font.SysFont("Arial", 24, bold=True)
         
         self.clock = pygame.time.Clock()
@@ -57,13 +56,10 @@ class GameClass:
                                    self.inventory.hotbar[self.inventory.selectedHotbarSlot])
         self.player.draw_player_info(self.screen,self.assets.heart,self.terrain)
         self.inventory.draw_hotbar(self.screen)
-        
-        # Draw FPS and Mouse last so they stay on top
         self.draw_fps()
         self.draw_mouse()
 
     def draw_fps(self):
-        # Calculate FPS
         fps_val = int(self.clock.get_fps())
         fps_surface = self.fps_font.render(f"FPS: {fps_val}", True, (255, 255, 0))
         self.screen.blit(fps_surface, (20, 20))
@@ -80,6 +76,6 @@ while game.running:
     game.update()
     game.draw()
     pygame.display.flip()
-    game.clock.tick(60) # This keeps the game at 60 FPS
+    game.clock.tick(60)
 
 pygame.quit()
