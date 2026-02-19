@@ -9,11 +9,11 @@ class EnemyClass:
         enemy.terrain = terrain
     
     def update(enemy):
-        target_world_x = enemy.terrain.x + (enemy.terrain.SCREEN_WIDTH // 2)
-        target_world_y = enemy.terrain.y + (enemy.terrain.SCREEN_HEIGHT // 2)
+        targetWorldX = enemy.terrain.x + (enemy.terrain.SCREEN_WIDTH // 2)
+        targetWorldY = enemy.terrain.y + (enemy.terrain.SCREEN_HEIGHT // 2)
 
-        diff_x = target_world_x - enemy.x
-        diff_y = target_world_y - enemy.y
+        diff_x = targetWorldX - enemy.x
+        diff_y = targetWorldY - enemy.y
         distance = (diff_x ** 2 + diff_y ** 2) ** 0.5
         
         if distance > 5:

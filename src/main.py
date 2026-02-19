@@ -15,8 +15,8 @@ class GameClass:
         pygame.mouse.set_visible(False)
         
         #loading images
-        self.heart_image = pygame.image.load("assets/heart.png").convert_alpha()
-        self.heart_image = pygame.transform.scale(self.heart_image,(75,75))
+        self.heartImage = pygame.image.load("assets/heart.png").convert_alpha()
+        self.heartImage = pygame.transform.scale(self.heartImage,(75,75))
 
         self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
         cursorWidth = self.cursor.get_width()
@@ -29,7 +29,7 @@ class GameClass:
         self.running = True
         self.terrain = TerrainGenClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         self.player = PlayerClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
-        self.enemy1 = EnemyClass(100, 100, self.player, self.terrain)
+        self.enemy = EnemyClass(100, 100, self.player, self.terrain)
         self.inventory = InventoryClass(self)
         
 
@@ -50,12 +50,13 @@ class GameClass:
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        self.enemy1.update()
+        self.enemy.update()
         self.terrain.draw_terrain(self.screen)
-        self.enemy1.draw(self.screen)
+        self.enemy.draw(self.screen)
         self.player.draw_player(self.screen)
-        self.player.draw_held_tool(self.screen,self.inventory.AllObjects,self.inventory.hotbar[self.inventory.selectedHotbarSlot])
-        self.player.draw_player_info(self.screen,self.heart_image,self.terrain)
+        self.player.draw_held_tool(self.screen,self.inventory.AllObjects,
+                                   self.inventory.hotbar[self.inventory.selectedHotbarSlot])
+        self.player.draw_player_info(self.screen,self.heartImage,self.terrain)
         self.inventory.draw_hotbar(self.screen)
         self.draw_mouse()
 
