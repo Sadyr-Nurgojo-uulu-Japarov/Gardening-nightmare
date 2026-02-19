@@ -9,11 +9,12 @@ from config import Assets
 def get_random_value(x, y, randomNumber):
     return ((math.sin(x * 12.9898 + y * 78.233 + randomNumber) * 43758.5453) % 1)
 
+
 class TerrainGenClass:
     def __init__(terrain, screen_width, screen_height):
         terrain.SCREEN_WIDTH = screen_width
         terrain.SCREEN_HEIGHT = screen_height
-        terrain.TILE_SIZE = 16
+        terrain.TILE_SIZE = 64
         terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
         terrain.tmpNoiseBiomes = OpenSimplex(seed=random.randint(0, 1000000))
@@ -32,7 +33,6 @@ class TerrainGenClass:
         terrain.assets.load_lake()
 
         terrain.SurfaceCache = {}
-
 
     def move_player(terrain, keys):
         nerf = 1
@@ -80,7 +80,7 @@ class TerrainGenClass:
                 drawX = tileX * terrain.TILE_SIZE - terrain.x
                 drawY = tileY * terrain.TILE_SIZE - terrain.y
 
-                terrain.draw_tile(biomeScale, playerTileX, playerTileY, mouseTileX, mouseTileY, tileX, tileY, drawX, drawY, screen)
+                terrain.draw_tile(biomeScale, tileX, tileY, drawX, drawY, screen)
                 if tileX == playerTileX and tileY == playerTileY:
                     screen.blit(terrain.lightOverlay, (drawX, drawY))
 
@@ -88,7 +88,7 @@ class TerrainGenClass:
                     screen.blit(terrain.mouseHighlightOverlay, (drawX, drawY))
                 
 
-    def draw_tile(terrain, biomeScale, playerTileX, playerTileY, mouseTileX, mouseTileY, tileX, tileY, drawX, drawY, screen):
+    def draw_tile(terrain, biomeScale, tileX, tileY, drawX, drawY, screen):
         if (tileX, tileY) in terrain.SurfaceCache:
             screen.blit(terrain.SurfaceCache[(tileX, tileY)], (drawX, drawY))
             return
