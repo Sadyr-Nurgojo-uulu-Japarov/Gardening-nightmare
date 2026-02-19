@@ -1,9 +1,10 @@
 import pygame
 
 class Assets:
-    def __init__(self, TILE_SIZE):
+    def __init__(self, TILE_SIZE=64):
         self.TILE_SIZE = TILE_SIZE
         self.Blocks = Block()
+        self.Objects = Objects()
 
     def load_grass(self):
         self.GrassList = []
@@ -59,6 +60,25 @@ class Assets:
             img = pygame.image.load(path).convert_alpha()
             self.LakeList.append(pygame.transform.scale(img, (self.TILE_SIZE, self.TILE_SIZE)))
             self.Blocks.EveryBlock[(lakeNames[i])] = self.LakeList[-1]
+
+    def load_items(self):
+        self.ItemsList = []
+        itemNames = ["sword", "pickaxe", "axe", "hoe", "wood", "stone", "iron ingot", "iron nugget", "emerald"]
+        for i in range(len(itemNames)):
+            path = f"assets/item/{itemNames[i]}.png"
+            img = pygame.image.load(path).convert_alpha()
+            self.ItemsList.append(pygame.transform.scale(img, (self.TILE_SIZE, self.TILE_SIZE)))
+            self.Blocks.EveryBlock[(itemNames[i])] = self.ItemsList[-1]
+
+    def load_cursor(self):
+        img = pygame.image.load("assets/cursor.png").convert_alpha()
+        cursorWidth = img.get_width()
+        cursorHeight = img.get_height()
+        self.CURSOR_SIZE_FACTOR = 2
+        self.cursor = pygame.transform.scale(img,(cursorWidth * self.CURSOR_SIZE_FACTOR,
+                                                          cursorHeight * self.CURSOR_SIZE_FACTOR))
+        self.Objects.EveryObject["cursor"] = self.cursor
+
 
 
 class Block:

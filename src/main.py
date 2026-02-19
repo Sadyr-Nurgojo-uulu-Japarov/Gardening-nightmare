@@ -3,6 +3,7 @@ from player import PlayerClass
 from enemy import EnemyClass
 from terrain_gen import TerrainGenClass
 from inventory import InventoryClass
+from config import Assets
 
 class GameClass:
     def __init__(self):
@@ -14,15 +15,13 @@ class GameClass:
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
         pygame.mouse.set_visible(False)
         
+        self.assets = Assets()
+        self.assets.load_cursor()
         #loading images
         self.heartImage = pygame.image.load("assets/heart.png").convert_alpha()
         self.heartImage = pygame.transform.scale(self.heartImage,(75,75))
 
-        self.cursor = pygame.image.load("assets/Mouse_cursors.png").convert_alpha()
-        cursorWidth = self.cursor.get_width()
-        cursorHeight = self.cursor.get_height()
-        self.CURSOR_SIZE_FACTOR = 2
-        self.cursor = pygame.transform.scale(self.cursor,(cursorWidth * self.CURSOR_SIZE_FACTOR, cursorHeight * self.CURSOR_SIZE_FACTOR))
+        
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Gardening nightmares")
@@ -61,8 +60,9 @@ class GameClass:
         self.draw_mouse()
 
     def draw_mouse(self):
-        mouse_pos = pygame.mouse.get_pos()
-        self.screen.blit(self.cursor,mouse_pos,(52 * self.CURSOR_SIZE_FACTOR, 3 * self.CURSOR_SIZE_FACTOR, 8 * self.CURSOR_SIZE_FACTOR, 10 * self.CURSOR_SIZE_FACTOR))
+        mousePos = pygame.mouse.get_pos()
+        self.screen.blit(self.assets.cursor, mousePos,(52 * self.assets.CURSOR_SIZE_FACTOR, 3 * self.assets.CURSOR_SIZE_FACTOR,
+                                                8 * self.assets.CURSOR_SIZE_FACTOR, 10 * self.assets.CURSOR_SIZE_FACTOR))
         
 
 game = GameClass()
