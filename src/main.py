@@ -11,7 +11,7 @@ class GameClass:
         pygame.mixer.init()
         pygame.font.init() # Initialize font system
 
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, vsync=1)
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = self.screen.get_size()
         pygame.mouse.set_visible(False)
         

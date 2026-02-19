@@ -1,7 +1,7 @@
 import pygame
 
 class Assets:
-    def __init__(self, TILE_SIZE=64):
+    def __init__(self, TILE_SIZE=16):
         self.TILE_SIZE = TILE_SIZE
         self.Blocks = Block()
         self.Objects = Objects()
