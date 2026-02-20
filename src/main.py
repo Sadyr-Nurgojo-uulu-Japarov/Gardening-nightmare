@@ -29,7 +29,7 @@ class GameClass:
         self.player = PlayerClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         self.enemy = EnemyClass(100, 100, self.player, self.terrain)
         self.inventory = InventoryClass(self)
-        self.dayNightCycle = DayNightCycleClass(self.SCREEN_WIDTH)
+        self.dayNightCycle = DayNightCycleClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         
 
     def update(self, dividedTime):
@@ -53,14 +53,18 @@ class GameClass:
     def draw(self):
         self.screen.fill((0, 0, 0))
         
+        # Entities
         self.terrain.draw_terrain(self.screen)
         self.enemy.draw(self.screen)
         self.player.draw_player(self.screen)
         self.player.draw_held_tool(self.screen,self.inventory.EveryBlocks,
                                    self.inventory.hotbar[self.inventory.selectedHotbarSlot])
+        
+        # UI 
+        self.dayNightCycle.draw(self.screen)
         self.player.draw_player_info(self.screen,self.assets.heart,self.terrain)
         self.inventory.draw_hotbar(self.screen)
-        self.dayNightCycle.draw(self.screen)
+        
         self.draw_fps()
         self.draw_mouse()
 
