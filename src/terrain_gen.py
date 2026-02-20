@@ -99,12 +99,19 @@ class TerrainGenClass:
             screen.blit(terrain.ModifiedTiles[(tileX, tileY)], (drawX, drawY))
             return 
         
-        # Check cache
+        # Check cache 
         if (tileX, tileY) in terrain.SurfaceCache:
-            screen.blit(terrain.SurfaceCache[(tileX, tileY)], (drawX, drawY))
+            cached = terrain.SurfaceCache[(tileX, tileY)]
+            if isinstance(cached, tuple):
+                surf, xOff, yOff = cached
+                screen.blit(surf, (drawX - xOff, drawY - yOff))
+            else:
+                screen.blit(cached, (drawX, drawY))
             return
-        
-        tileSurface = pygame.Surface((terrain.TILE_SIZE, terrain.TILE_SIZE), pygame.SRCALPHA)
+
+        tileSurface = pygame.Surface((terrain.TILE_SIZE * 3, terrain.TILE_SIZE * 3), pygame.SRCALPHA)
+        baseDrawX = terrain.TILE_SIZE
+        baseDrawY = terrain.TILE_SIZE * 2
 
         randomValueGrassWater = get_random_value(tileX, tileY, 174)
         randomValueNatureTree = get_random_value(tileX, tileY, 194)
@@ -120,22 +127,22 @@ class TerrainGenClass:
 
         if noiseValueWater < -0.6:
             lakeType = 0 if randomValueGrassWater < 0.8 else (1 if randomValueGrassWater < 0.95 else 2)
-            tileSurface.blit(terrain.assets.LakeList[lakeType], (0, 0))
+            tileSurface.blit(terrain.assets.LakeList[lakeType], (baseDrawX, baseDrawY))
         else:
 
             # Foliage
             foliageType = 0 if randomValueGrassWater < 0.9 else (1 if randomValueGrassWater < 0.97 else 2)
-            tileSurface.blit(terrain.assets.GrassList[foliageType + grassType], (0, 0))
+            tileSurface.blit(terrain.assets.GrassList[foliageType + grassType], (baseDrawX, baseDrawY))
 
 
             # Nature and Trees
             if grassType == 3:
                 if randomValueNatureTree < 0.01:
                     natureChoice = terrain.assets.NatureList[int(randomValueGrassWater * len(terrain.assets.NatureList))]
-                    tileSurface.blit(natureChoice, (0, 0))
+                    tileSurface.blit(natureChoice, (baseDrawX, baseDrawY))
                 elif randomValueNatureTree < 0.02:
                     treeChoice = terrain.assets.TreesList[int(randomValueGrassWater * len(terrain.assets.TreesList))]
-                    tileSurface.blit(treeChoice, (-terrain.TILE_SIZE, -terrain.TILE_SIZE*2))
-
-        terrain.SurfaceCache[(tileX, tileY)] = tileSurface
-        screen.blit(tileSurface, (drawX, drawY))
+                    tileSurface.blit(treeChoice, (baseDrawX - terrain.TILE_SIZE, baseDrawY - terrain.TILE_SIZE*2))
+                    
+        terrain.SurfaceCache[(tileX, tileY)] = (tileSurface, baseDrawX, baseDrawY)
+        screen.blit(tileSurface, (drawX - baseDrawX, drawY - baseDrawY))
