@@ -67,13 +67,12 @@ class Assets:
             self.Blocks.EveryBlock[(lakeNames[i])] = self.LakeList[-1]
 
     def load_items(self, SLOT_SIZE):
-        self.ItemsList = []
         itemNames = ["sword", "pickaxe", "axe", "hoe", "wood", "stone", "iron_ingot", "iron_nugget", "emerald"]
         for i in range(len(itemNames)):
             path = f"assets/item/{itemNames[i]}.png"
             img = pygame.image.load(path).convert_alpha()
-            self.ItemsList.append(pygame.transform.scale(img, (SLOT_SIZE*0.7, SLOT_SIZE*0.7)))
-            self.Blocks.EveryBlock[(itemNames[i])] = self.ItemsList[-1]
+            img = pygame.transform.scale(img, (SLOT_SIZE*0.7, SLOT_SIZE*0.7))
+            self.Blocks.EveryBlock[itemNames[i]] = img
 
     def load_cursor(self):
         img = pygame.image.load("assets/cursor.png").convert_alpha()
