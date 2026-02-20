@@ -4,6 +4,7 @@ from enemy import EnemyClass
 from terrain_gen import TerrainGenClass
 from inventory import InventoryClass
 from config import Assets
+from cycle import DayNightCycleClass
 
 class GameClass:
     def __init__(self):
@@ -28,9 +29,10 @@ class GameClass:
         self.player = PlayerClass(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         self.enemy = EnemyClass(100, 100, self.player, self.terrain)
         self.inventory = InventoryClass(self)
+        self.dayNightCycle = DayNightCycleClass(self.SCREEN_WIDTH)
         
 
-    def update(self):
+    def update(self, dividedTime):
         pressed_keys = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -44,11 +46,13 @@ class GameClass:
                 self.inventory.select_hotbar_slot(event.text)
         
         self.terrain.move_player(pressed_keys)
+        self.enemy.update()
+        self.dayNightCycle.update(dividedTime)
         
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        self.enemy.update()
+        
         self.terrain.draw_terrain(self.screen)
         self.enemy.draw(self.screen)
         self.player.draw_player(self.screen)
@@ -56,6 +60,7 @@ class GameClass:
                                    self.inventory.hotbar[self.inventory.selectedHotbarSlot])
         self.player.draw_player_info(self.screen,self.assets.heart,self.terrain)
         self.inventory.draw_hotbar(self.screen)
+        self.dayNightCycle.draw(self.screen)
         self.draw_fps()
         self.draw_mouse()
 
@@ -66,16 +71,15 @@ class GameClass:
 
     def draw_mouse(self):
         mousePos = pygame.mouse.get_pos()
-        self.screen.blit(self.assets.cursor, mousePos,(52 * self.assets.CURSOR_SIZE_FACTOR, 3 * self.assets.CURSOR_SIZE_FACTOR,
-                                                 8 * self.assets.CURSOR_SIZE_FACTOR, 10 * self.assets.CURSOR_SIZE_FACTOR))
+        self.screen.blit(self.assets.cursor, mousePos)
         
 
 game = GameClass()
 
 while game.running:
-    game.update()
+    dividedTime = game.clock.tick(60) / 1000
+    game.update(dividedTime)
     game.draw()
     pygame.display.flip()
-    game.clock.tick(60)
 
 pygame.quit()

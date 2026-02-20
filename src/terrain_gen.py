@@ -14,7 +14,7 @@ class TerrainGenClass:
     def __init__(terrain, screen_width, screen_height):
         terrain.SCREEN_WIDTH = screen_width
         terrain.SCREEN_HEIGHT = screen_height
-        terrain.TILE_SIZE = 8
+        terrain.TILE_SIZE = 40
         terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
         terrain.tmpNoiseBiomes = OpenSimplex(seed=random.randint(0, 1000000))
@@ -60,6 +60,10 @@ class TerrainGenClass:
             return 
         elif newTileType == "farmland":
             terrain.ModifiedTiles[(tileX, tileY)] = terrain.assets.Blocks.EveryBlock["farmland"]
+            if (tileX, tileY) in terrain.SurfaceCache:
+                del terrain.SurfaceCache[(tileX, tileY)]
+
+
 
     def draw_terrain(terrain, screen):
         biomeScale = 0.05
@@ -89,14 +93,16 @@ class TerrainGenClass:
                 
 
     def draw_tile(terrain, biomeScale, tileX, tileY, drawX, drawY, screen):
-        if (tileX, tileY) in terrain.SurfaceCache:
-            screen.blit(terrain.SurfaceCache[(tileX, tileY)], (drawX, drawY))
-            return
-
+        
         # Check modified tiles
         if (tileX, tileY) in terrain.ModifiedTiles:
             screen.blit(terrain.ModifiedTiles[(tileX, tileY)], (drawX, drawY))
             return 
+        
+        # Check cache
+        if (tileX, tileY) in terrain.SurfaceCache:
+            screen.blit(terrain.SurfaceCache[(tileX, tileY)], (drawX, drawY))
+            return
         
         tileSurface = pygame.Surface((terrain.TILE_SIZE, terrain.TILE_SIZE), pygame.SRCALPHA)
 
