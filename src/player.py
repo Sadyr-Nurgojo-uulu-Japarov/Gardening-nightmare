@@ -28,12 +28,16 @@ class PlayerClass:
             toolRect = toolRotated.get_rect(center=player.position + orbitOffset)
 
             if player.isSwinging:
+                angle += 10*player.swingStep
+                toolRotated = pygame.transform.rotate(toolImage, angle - 90)
+                orbitOffset = pygame.Vector2(60, 0).rotate(-angle)
+                toolRect = toolRotated.get_rect(center=player.position + orbitOffset)
                 player.swingStep += 1
 
             elif player.swingCooldown > 0:
                 player.swingCooldown -= 1
 
-            if player.swingStep == 4:
+            if player.swingStep == 10:
                 player.isSwinging = False
                 player.swingStep = 0
                 player.swingCooldown = 10
