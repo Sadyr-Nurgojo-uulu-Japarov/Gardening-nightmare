@@ -14,7 +14,7 @@ class TerrainGenClass:
     def __init__(terrain, screen_width, screen_height):
         terrain.SCREEN_WIDTH = screen_width
         terrain.SCREEN_HEIGHT = screen_height
-        terrain.TILE_SIZE = 64
+        terrain.TILE_SIZE = 8
         terrain.PLAYER_SPEED = 10
         terrain.x, terrain.y = 0, 0
         terrain.tmpNoiseBiomes = OpenSimplex(seed=random.randint(0, 1000000))
